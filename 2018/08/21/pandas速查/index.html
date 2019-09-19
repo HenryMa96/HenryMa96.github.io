@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pandas,python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Pandas 速查手册 一、数据的导入pd.read_csv(filename) # 导入csv格式文件中的数据pd.read_table(filename) # 导入有分隔符的文本 (如TSV) 中的数据pd.read_excel(filename) # 导入Excel格式文件中的数据pd.read_sql(query, connection_object) # 导入SQL数据表/数据库中的数据">
+<meta name="keywords" content="pandas,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pandas速查">
+<meta property="og:url" content="http://yoursite.com/2018/08/21/pandas速查/index.html">
+<meta property="og:site_name" content="楼顶晒太阳">
+<meta property="og:description" content="Pandas 速查手册 一、数据的导入pd.read_csv(filename) # 导入csv格式文件中的数据pd.read_table(filename) # 导入有分隔符的文本 (如TSV) 中的数据pd.read_excel(filename) # 导入Excel格式文件中的数据pd.read_sql(query, connection_object) # 导入SQL数据表/数据库中的数据">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-31T13:55:23.509Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pandas速查">
+<meta name="twitter:description" content="Pandas 速查手册 一、数据的导入pd.read_csv(filename) # 导入csv格式文件中的数据pd.read_table(filename) # 导入有分隔符的文本 (如TSV) 中的数据pd.read_excel(filename) # 导入Excel格式文件中的数据pd.read_sql(query, connection_object) # 导入SQL数据表/数据库中的数据">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script>
+     (function(){
+         if(''){
+             if (prompt('请输入文章密码') !== ''){
+                 alert('密码错误！');
+                 history.back();
+             }
+         }
+     })();
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/21/pandas速查/"/>
+
+
+
+
+
+  <title>pandas速查 | 楼顶晒太阳</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4d2c7fad6139a74c12c65f25c7aed89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楼顶晒太阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/21/pandas速查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hengyuanm">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E6%89%8B%E7%BB%98%E5%A4%B4%E5%83%8Fmhy%E4%BF%AE%E5%B0%BA%E5%AF%B8.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楼顶晒太阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pandas速查</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-21T20:36:50+08:00">
+                2018-08-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-31T21:55:23+08:00">
+                2018-08-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程之美/" itemprop="url" rel="index">
+                    <span itemprop="name">编程之美</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/21/pandas速查/" class="leancloud_visitors" data-flag-title="pandas速查">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,488
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Pandas 速查手册</p>
+<h2 id="一、数据的导入"><a href="#一、数据的导入" class="headerlink" title="一、数据的导入"></a>一、数据的导入</h2><p>pd.read_csv(filename) # 导入csv格式文件中的数据<br>pd.read_table(filename) # 导入有分隔符的文本 (如TSV) 中的数据<br>pd.read_excel(filename) # 导入Excel格式文件中的数据<br>pd.read_sql(query, connection_object) # 导入SQL数据表/数据库中的数据<br>pd.read_json(json_string) # 导入JSON格式的字符，URL地址或者文件中的数据<br>pd.read_html(url) # 导入经过解析的URL地址中包含的数据框 (DataFrame) 数据<br>pd.read_clipboard() # 导入系统粘贴板里面的数据<br>pd.DataFrame(dict) # 导入Python字典 (dict) 里面的数据，其中key是数据框的表头，value是数据框的内容。</p>
+<a id="more"></a>
+<h2 id="二、数据的导出"><a href="#二、数据的导出" class="headerlink" title="二、数据的导出"></a>二、数据的导出</h2><p>df.to_csv(filename) # 将数据框 (DataFrame)中的数据导入csv格式的文件中<br>df.to_excel(filename) # 将数据框 (DataFrame)中的数据导入Excel格式的文件中<br>df.to_sql(table_name,connection_object) # 将数据框 (DataFrame)中的数据导入SQL数据表/数据库中<br>df.to_json(filename) # 将数据框 (DataFrame)中的数据导入JSON格式的文件中</p>
+<h2 id="三、创建测试对象"><a href="#三、创建测试对象" class="headerlink" title="三、创建测试对象"></a>三、创建测试对象</h2><p><strong>创建一个DataFrame对象</strong><br>pd.DataFrame(np.random.rand(10,5)) # 创建一个5列10行的由随机浮点数组成的数据框 DataFrame</p>
+<p><strong>创建一个Series对象</strong><br>pd.Series(my_list) # 从一个可迭代的对象 my_list 中创建一个数据组</p>
+<h2 id="四、数据的查看与检查"><a href="#四、数据的查看与检查" class="headerlink" title="四、数据的查看与检查"></a>四、数据的查看与检查</h2><p>df.head(n) # 查看数据框的前n行<br>df.tail(n) # 查看数据框的最后n行<br>df.shape # 查看数据框的行数与列数 shape是该对象的一个属性值，不是函数<br>df.info() # 查看数据框 (DataFrame) 的索引、数据类型及内存信息<br>df.describe() # 对于数据类型为数值型的列，查询其描述性统计的内容<br><strong>s.value_counts(dropna=False)</strong> # s是一个Series对象，查询每个独特数据值出现次数统计<br><strong>df.apply(pd.Series.value_counts)</strong> # 统计df中每一个数字在每一列中出现的次数</p>
+<h2 id="五、数据的选取"><a href="#五、数据的选取" class="headerlink" title="五、数据的选取"></a>五、数据的选取</h2><p>df[col] # 以数组 Series 的形式返回选取的列，col是列名<br>df[[col1, col2]] # 以新的数据框(DataFrame)的形式返回选取的列<br>df.loc[0] # 选取第一行,没有设置index时，第一行index默认为0<br>df.ix[‘a’] # 选取索引为a的那一行<br>df.iloc[0,:] # 选取第一行<br>df.iloc[0,0] # 选取第一行第一个元素</p>
+<p>s.iloc[0] # 按照位置选取<br>s.loc[‘index_one’] # 按照索引选取 ‘index_one’是指第一个位置的index名，没有设置index时，inde默认为0</p>
+<h2 id="六、数据的清洗"><a href="#六、数据的清洗" class="headerlink" title="六、数据的清洗"></a>六、数据的清洗</h2><p>df.columns = [‘a’,’b’] # 重命名数据框的列名称<br>pd.isnull() # 检查数据中空值出现的情况，并返回一个由布尔值(True,Fale)组成的列<br>pd.notnull() # 检查数据中非空值出现的情况，并返回一个由布尔值(True,False)组成的列<br>df.dropna() # 移除数据框 DataFrame 中包含空值的行<br>df.dropna(axis=1) # 移除数据框 DataFrame 中包含空值的列<br>df.fillna(x) # 将数据框 DataFrame 中的所有空值替换为 x</p>
+<p>s.fillna(s.mean()) -&gt; 将所有空值替换为平均值<br>s.astype(float) # 将数组(Series)的格式转化为浮点数<br>s.replace(1,’one’) # 将数组(Series)中的所有1替换为’one’<br>s.replace([1,3],[‘one’,’three’]) # 将数组(Series)中所有的1替换为’one’, 所有的3替换为’three’</p>
+<p>df.rename(columns=lambda x: x + 2) # 将全体列重命名<br>df.rename(columns={‘old_name’: ‘new_ name’}) # 将选择的列重命名<br>df.rename(index = lambda x: x+ 1) # 改变全体索引<br>df.set_index(‘column_one’) # 改变索引 ，指定某一列的值当整个DataFrame的索引</p>
+<h2 id="七、数据的过滤-filter-排序-sort-和分组-groupby"><a href="#七、数据的过滤-filter-排序-sort-和分组-groupby" class="headerlink" title="七、数据的过滤(filter),排序(sort)和分组(groupby)"></a>七、数据的过滤(filter),排序(sort)和分组(groupby)</h2><p><strong>filter</strong><br>df[df[col] &gt; 0.5] # 以col列为标准，选取数值大于0.5的行为True，然后从df中选取这些行<br>df[(df[col] &gt; 0.5) &amp; (df[col] &lt; 0.7)] # 选取数据框df中对应行（col列&gt;0.5,col&lt;0.7)  <code>或为 |</code></p>
+<p><strong>sort</strong><br>df.sort_values(col1) # 按照数据框的列col1升序(ascending)的方式对数据框df做排序<br>df.sort_values(col2,ascending=False) # 按照数据框的列col2降序(descending)的方式对数据框df做排序<br>df.sort_values([col1,col2],ascending=[True,False]) # 按照数据框的列col1升序，col2降序的方式对数据框df做排序<br><strong>groupby</strong><br>df.groupby(col) # 按照某列对数据框df做分组<br>df.groupby(‘A’).count() #根据A列分组，并计数<br>df.groupby([col1,col2]) # 按照列col1和col2对数据框df做分组<br>df.pivot_table(index=col1,values=[col2,col3],aggfunc=mean) # 做透视表，索引为col1,针对的数值列为col2和col3，aggfunc为分组函数，默认为mean,可以设置np.sum等</p>
+<p><strong>apply</strong><br>df.apply(np.mean) # 对数据框df的每一列求平均值<br>df.apply(np.max,axis=1) # 对数据框df的每一行求最大值 #axis=0是指沿着行轴方向，即从上到下的列方向，axis=1是指沿着列轴方向，即从左到右的方向</p>
+<h2 id="八、数据的连接-join-与组合-combine"><a href="#八、数据的连接-join-与组合-combine" class="headerlink" title="八、数据的连接(join)与组合(combine)"></a>八、数据的连接(join)与组合(combine)</h2><p>df1.append(df2) # 在数据框df2的末尾添加数据框df1，其中df1和df2的列数应该相等<br>pd.concat([df1,df2]) # 不指定axis时默认为0，沿着行轴方向增加，列数应该相同与append一样<br>pd.concat([df1, df2],axis=1) # 在数据框df1的列最后添加数据框df2,其中df1和df2的行数应该相等</p>
+<p>df1.join(df2,on=col1,how=’inner’) # 对数据框df1和df2做内连接，其中连接的列为col1<br>pd.merge(df1,df2,left_on=’key’,right_on=’key’) #索引上的合并</p>
+<h2 id="九、数据的统计"><a href="#九、数据的统计" class="headerlink" title="九、数据的统计"></a>九、数据的统计</h2><p>df.describe() # 得到数据框df每一列的描述性统计<br>df.mean() # 得到数据框df中每一列的平均值<br>df.corr() # 得到数据框df中每一列与其他列的相关系数<br>df.count() # 得到数据框df中每一列的非空值个数<br>df.max() # 得到数据框df中每一列的最大值<br>df.min() # 得到数据框df中每一列的最小值<br>df.median() # 得到数据框df中每一列的中位数<br>df.std() # 得到数据框df中每一列的标准差</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pandas/" rel="tag"># pandas</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/19/VS2010-编译-pnd3d体素化引擎/" rel="next" title="VS2010 编译 pnd3d体素化引擎">
+                <i class="fa fa-chevron-left"></i> VS2010 编译 pnd3d体素化引擎
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/22/Git学习笔记/" rel="prev" title="Git学习笔记">
+                Git学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E6%89%8B%E7%BB%98%E5%A4%B4%E5%83%8Fmhy%E4%BF%AE%E5%B0%BA%E5%AF%B8.jpg"
+                alt="Hengyuanm" />
+            
+              <p class="site-author-name" itemprop="name">Hengyuanm</p>
+              <p class="site-description motion-element" itemprop="description">宁静致远！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/marcellosloan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、数据的导入"><span class="nav-number">1.</span> <span class="nav-text">一、数据的导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、数据的导出"><span class="nav-number">2.</span> <span class="nav-text">二、数据的导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、创建测试对象"><span class="nav-number">3.</span> <span class="nav-text">三、创建测试对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、数据的查看与检查"><span class="nav-number">4.</span> <span class="nav-text">四、数据的查看与检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、数据的选取"><span class="nav-number">5.</span> <span class="nav-text">五、数据的选取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、数据的清洗"><span class="nav-number">6.</span> <span class="nav-text">六、数据的清洗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、数据的过滤-filter-排序-sort-和分组-groupby"><span class="nav-number">7.</span> <span class="nav-text">七、数据的过滤(filter),排序(sort)和分组(groupby)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、数据的连接-join-与组合-combine"><span class="nav-number">8.</span> <span class="nav-text">八、数据的连接(join)与组合(combine)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、数据的统计"><span class="nav-number">9.</span> <span class="nav-text">九、数据的统计</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hengyuanm</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("7M7toWdz1xylYdcnscUhnoQw-gzGzoHsz", "6vW8g3cfN41QRMBVDdKFEMML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title></title>
+	<link rel="stylesheet" href="/static/css/player.css">
+</head>
+
+<div id="QPlayer">
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+				<div class="adf"></div>
+		</div>
+	</div>
+	<ol id="playlist"></ol>
+</div>
+<script src="//cdn.bootcss.com/jQuery.Marquee/1.3.94/jquery.marquee.min.js"></script>
+<script>
+  var playlist = [];
+  
+  playlist.push({title:'人生马拉松',artist:'陈奕迅',mp3:'https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/music%2F%E4%BA%BA%E7%94%9F%E9%A9%AC%E6%8B%89%E6%9D%BE.mp3',cover:'http://img4.kuwo.cn/star/starheads/240/81/37/17029594.jpg'})
+  
+  var isRotate = true;
+  var autoplay = false;
+</script>
+<script src="/static/js/player.js"></script>
+<script>
+  function bgChange(){
+	var lis= $('.lib');
+	for(var i=0; i<lis.length; i+=2)
+	lis[i].style.background = 'rgba(246, 246, 246, 0.5)';
+  }
+  window.onload = bgChange;
+</script>
+
+
+</body>
+</html>
