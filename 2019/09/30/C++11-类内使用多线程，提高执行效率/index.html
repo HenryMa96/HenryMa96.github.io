@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Git," />
+  <meta name="keywords" content="C++," />
 
 
 
@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="学习一下Git，构建自己的Github代码库！">
-<meta name="keywords" content="Git">
+<meta name="description" content="C++11 &amp;lt;thread&amp;gt; 多线程本篇code解决：  在类内部使用多线程，即多线程执行函数为类的成员函数 执行函数调用类的内部变量 同步问题">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git学习笔记">
-<meta property="og:url" content="http://yoursite.com/2018/09/22/Git学习笔记/index.html">
+<meta property="og:title" content="C++11 类内使用多线程，提高执行效率">
+<meta property="og:url" content="http://yoursite.com/2019/09/30/C++11-类内使用多线程，提高执行效率/index.html">
 <meta property="og:site_name" content="楼顶晒太阳">
-<meta property="og:description" content="学习一下Git，构建自己的Github代码库！">
+<meta property="og:description" content="C++11 &amp;lt;thread&amp;gt; 多线程本篇code解决：  在类内部使用多线程，即多线程执行函数为类的成员函数 执行函数调用类的内部变量 同步问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/Git%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E5%88%86%E6%94%AF%E8%A1%A8.png">
-<meta property="og:updated_time" content="2018-09-22T03:09:05.950Z">
+<meta property="og:image" content="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:image" content="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:updated_time" content="2019-09-30T03:05:37.066Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git学习笔记">
-<meta name="twitter:description" content="学习一下Git，构建自己的Github代码库！">
-<meta name="twitter:image" content="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/Git%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E5%88%86%E6%94%AF%E8%A1%A8.png">
+<meta name="twitter:title" content="C++11 类内使用多线程，提高执行效率">
+<meta name="twitter:description" content="C++11 &amp;lt;thread&amp;gt; 多线程本篇code解决：  在类内部使用多线程，即多线程执行函数为类的成员函数 执行函数调用类的内部变量 同步问题">
+<meta name="twitter:image" content="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/22/Git学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/09/30/C++11-类内使用多线程，提高执行效率/"/>
 
 
 
 
 
-  <title>Git学习笔记 | 楼顶晒太阳</title>
+  <title>C++11 类内使用多线程，提高执行效率 | 楼顶晒太阳</title>
   
 
 
@@ -286,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/Git学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/C++11-类内使用多线程，提高执行效率/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hengyuanm">
@@ -303,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Git学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">C++11 类内使用多线程，提高执行效率</h1>
         
 
         <div class="post-meta">
@@ -313,8 +314,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-22T11:07:17+08:00">
-                2018-09-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T10:33:14+08:00">
+                2019-09-30
               </time>
             
 
@@ -327,8 +328,8 @@
                 <i class="fa fa-calendar-check-o"></i>
               </span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-09-22T11:09:05+08:00">
-                2018-09-22
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-30T11:05:37+08:00">
+                2019-09-30
               </time>
             
           </span>
@@ -361,7 +362,7 @@
 
           
           
-             <span id="/2018/09/22/Git学习笔记/" class="leancloud_visitors" data-flag-title="Git学习笔记">
+             <span id="/2019/09/30/C++11-类内使用多线程，提高执行效率/" class="leancloud_visitors" data-flag-title="C++11 类内使用多线程，提高执行效率">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -384,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,046
+                  613
                 </span>
               
 
@@ -400,7 +401,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  3
                 </span>
               
             </div>
@@ -421,123 +422,43 @@
       
 
       
-        <p>学习一下Git，构建自己的Github代码库！</p>
-<a id="more"></a>
-<p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰Git课程</a></p>
-<p><a href="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/git-cheatsheet.pdf" target="_blank" rel="noopener">Git命令sheet</a></p>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始化git仓库 <code>git init</code></p>
-<h2 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h2><p>添加文件至Git仓库：</p>
-<ol>
-<li><code>git add &lt;file&gt;</code></li>
-<li><code>git commit -m &lt;message&gt;</code></li>
-</ol>
-<h2 id="简单查看"><a href="#简单查看" class="headerlink" title="简单查看"></a>简单查看</h2><p>查看工作区状态：<code>git status</code><br>查看修改内容：<code>git diff</code></p>
-<h2 id="版本切换："><a href="#版本切换：" class="headerlink" title="版本切换："></a>版本切换：</h2><ul>
-<li><strong>HEAD</strong> 指的是当前版本，在历史版本之间穿梭，使用命令<code>git reset --hard commit_id</code></li>
-<li>穿梭前，使用<code>git log</code>查看提交历史，以便确定回退到哪个版本</li>
-<li>要重返未来，用<code>git reflog</code>查看历史命令，确定要回到的未来版本</li>
-</ul>
-<h2 id="工作区和暂存区的概念"><a href="#工作区和暂存区的概念" class="headerlink" title="工作区和暂存区的概念"></a>工作区和暂存区的概念</h2><p><code>git add</code>是将提交的修改放到暂存区<br><code>git commit</code>一次性将暂存区的所有修改提交到分支。</p>
-<h2 id="Git管理跟踪的是修改"><a href="#Git管理跟踪的是修改" class="headerlink" title="Git管理跟踪的是修改"></a>Git管理跟踪的是修改</h2><p>每次修改，如果不用<code>git add</code>到暂存区，那就不会加入到commit中。</p>
-<h2 id="修改回退方法"><a href="#修改回退方法" class="headerlink" title="修改回退方法"></a>修改回退方法</h2><p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- file</code>。</p>
-<p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了场景1，第二步按场景1操作。</p>
-<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
-<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p>命令<code>git rm</code>用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容</p>
-<blockquote>
-<p>先手动删除文件，然后使用git rm <file>和git add<file>效果是一样的。</file></file></p>
-</blockquote>
-<p><code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
-<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001374385852170d9c7adf13c30429b9660d0eb689dd43a000" target="_blank" rel="noopener">连接Github</a></p>
-<h3 id="本地创建好–-gt-Github"><a href="#本地创建好–-gt-Github" class="headerlink" title="本地创建好–&gt;Github"></a>本地创建好–&gt;Github</h3><p>本地仓库连接新创建的Github仓库(此时Github仓库必须为空！不能有Readme，不然会失败)：<br><code>$ git remote add origin git@github.com:michaelliao/learngit.git</code></p>
-<p>将本地库的内容推送到远程库：<br><code>$ git push -u origin master</code></p>
-<p><em>由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。</em></p>
-<p>每次本地提交后，只要有必要，就可以使用命令<code>git push origin master</code>推送最新修改</p>
-<h3 id="克隆Github已有仓库"><a href="#克隆Github已有仓库" class="headerlink" title="克隆Github已有仓库"></a>克隆Github已有仓库</h3><p>克隆命令：<br><code>$ git clone git@github.com:michaelliao/gitskills.git</code></p>
-<p><em>GitHub给出的地址不止一个，还可以用<strong><a href="https://github.com/MarcelloSloan/learngit.git" target="_blank" rel="noopener">https://github.com/MarcelloSloan/learngit.git</a></strong>这样的地址。实际上，Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。<br>使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。</em></p>
-<blockquote>
-<p>克隆一个仓库，首先必须知道仓库的地址，然后使用git clone命令克隆。Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快</p>
-</blockquote>
-<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="基础功能"><a href="#基础功能" class="headerlink" title="基础功能"></a>基础功能</h3><table>
-<thead>
-<tr>
-<th style="text-align:center">功能</th>
-<th style="text-align:center">命令</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">查看分支：</td>
-<td style="text-align:center"><code>git branch</code></td>
-</tr>
-<tr>
-<td style="text-align:center">创建分支：</td>
-<td style="text-align:center"><code>git branch &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td style="text-align:center">切换分支：</td>
-<td style="text-align:center"><code>git checkout &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td style="text-align:center">创建+切换分支：</td>
-<td style="text-align:center"><code>git checkout -b &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td style="text-align:center">合并某分支到当前分支：</td>
-<td style="text-align:center"><code>git merge &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td style="text-align:center">删除分支：</td>
-<td style="text-align:center"><code>git branch -d &lt;name&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h3><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。<br>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。<br>用<code>git log --graph</code>命令可以看到分支合并图。<br><code>git log --graph --pretty=oneline --abbrev-commit</code></p>
-<h3 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h3><p>默认合并时，Git会使用<code>Fast Forward</code>模式，这种模式下，合并后，看不到分支信息。<br>禁用fast forward模式，在merge时生成一个新的commit，就可以看得到分支信息。</p>
-<p><code>git merge --no-ff -m &quot;merge with no-ff&quot; &lt;name&gt;</code></p>
-<blockquote>
-<p>在实际开发中，我们应该按照几个基本原则进行分支管理：<br>首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；<br>那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；<br>你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。</p>
-</blockquote>
-<p><img src="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/Git%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E5%88%86%E6%94%AF%E8%A1%A8.png" alt="团队分支"></p>
-<h3 id="Bug分支"><a href="#Bug分支" class="headerlink" title="Bug分支"></a>Bug分支</h3><p>修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；<br>当手头工作没有完成时，先把工作现场<code>git stash</code>一下，然后去修复bug，修复后，再<code>git stash pop</code>，回到工作现场。</p>
-<p>你可以多次stash，恢复的时候，先用<code>git stash list</code>查看，然后恢复指定的stash，用命令：<br><code>$ git stash apply stash@{0}</code></p>
-<h3 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h3><p>开发一个新feature，最好新建一个分支；<br>如果要丢弃一个没有被合并过的分支，可以通过<code>git branch -D &lt;name&gt;</code>强行删除。</p>
-<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><p>因此，多人协作的工作模式通常是这样：</p>
-<ol>
-<li>首先，可以试图用<code>git push origin &lt;branch-name&gt;</code>推送自己的修改；</li>
-<li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
-<li>如果合并有冲突，则解决冲突，并在本地提交；</li>
-<li>没有冲突或者解决掉冲突后，再用<code>git push origin &lt;branch-name&gt;</code>推送就能成功！</li>
-</ol>
-<blockquote>
-<p>如果<code>git pull</code>提示<code>no tracking information</code>，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream-to &lt;branch-name&gt; origin/&lt;branch-name&gt;</code>。</p>
-</blockquote>
-<p>这就是多人协作的工作模式，一旦熟悉了，就非常简单。</p>
+        <h1 id="C-11-lt-thread-gt-多线程"><a href="#C-11-lt-thread-gt-多线程" class="headerlink" title="C++11 &lt;thread&gt; 多线程"></a>C++11 <code>&lt;thread&gt;</code> 多线程</h1><p>本篇code解决：</p>
 <ul>
-<li>查看远程库信息，使用<code>git remote -v</code>；</li>
-<li>本地新建的分支如果不推送到远程，对其他人就是不可见的；</li>
-<li>从本地推送分支，使用<code>git push origin branch-name</code>，如果推送失败，先用<code>git pull</code>抓取远程的新提交；</li>
-<li>在本地创建和远程分支对应的分支，使用<code>git checkout -b branch-name origin/branch-name</code>，本地和远程分支的名称最好一致；</li>
-<li>建立本地分支和远程分支的关联，使用<code>git branch --set-upstream branch-name origin/branch-name</code>；</li>
-<li>从远程抓取分支，使用<code>git pull</code>，如果有冲突，要先处理冲突。</li>
+<li>在类内部使用多线程，即多线程执行函数为类的成员函数</li>
+<li>执行函数调用类的内部变量</li>
+<li>同步问题<a id="more"></a>
+</li>
 </ul>
-<h3 id="Rebase"><a href="#Rebase" class="headerlink" title="Rebase"></a>Rebase</h3><p>rebase操作可以把本地未push的分叉提交历史整理成直线；<br>rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。</p>
-<h2 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h2><blockquote>
-<p>Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针, tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起</p>
+<h2 id="总体代码及思路"><a href="#总体代码及思路" class="headerlink" title="总体代码及思路"></a>总体代码及思路</h2><p>在 <strong>panel</strong> 类内，<strong>Render()</strong>时，使用静态函数 <strong>DateProcessThread(Data* anyInData)</strong> 分批处理 <strong>mArrays</strong> 的数据，并在处理时，使用 <strong>panel</strong> 类的 静态成员变量  <strong>mClassStaticValue</strong>辅助， 等待多个线程处理完毕后，再继续执行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">panel</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	panel() &#123;&#125;</span><br><span class="line">	~panel() &#123; <span class="keyword">delete</span> mArrays; &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Data</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">double</span> mClassStaticValue;</span><br><span class="line">	<span class="keyword">int</span>* mArrays;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//静态线程函数</span></span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DateProcessThread</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Data:"</span>&lt;&lt; i &lt;&lt; <span class="string">"  I am a thread !"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"I can process static value:"</span> &lt;&lt; mClassStaticValue &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//入口函数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Render</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;thread*&gt; thrdList;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			thread* thrd = <span class="keyword">new</span> thread(DateProcessThread, mArrays[i]);</span><br><span class="line">			thrdList.push_back(thrd);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> thrd : thrdList)</span><br><span class="line">		&#123;</span><br><span class="line">			thrd-&gt;join();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> panel::mClassStaticValue = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	panel tPanel;</span><br><span class="line">	panel::mClassStaticValue = <span class="number">50</span>;</span><br><span class="line">	tPanel.mArrays = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tPanel.mArrays[i] = i + <span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	tPanel.Render();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="执行结果"></p>
+<h2 id="类内部使用多线程"><a href="#类内部使用多线程" class="headerlink" title="类内部使用多线程"></a>类内部使用多线程</h2><p>线程执行函数必须定义为 static ！</p>
+<blockquote>
+<p>static void DateProcessThread(int i);</p>
 </blockquote>
-<ul>
-<li>命令<code>git tag &lt;tagname&gt;</code>用于新建一个标签，默认为HEAD，也可以指定一个commit id；</li>
-<li>命令<code>git tag -a &lt;tagname&gt; -m &quot;blablabla...&quot;</code>可以指定标签信息；</li>
-<li><p>命令<code>git tag</code>可以查看所有标签。</p>
-</li>
-<li><p>命令<code>git push origin &lt;tagname&gt;</code>可以推送一个本地标签；</p>
-</li>
-<li>命令<code>git push origin --tags</code>可以推送全部未推送过的本地标签；</li>
-<li>命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；</li>
-<li>命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签。</li>
+<blockquote>
+<p>thread* thrd = new thread(DateProcessThread, mArrays[i]);</p>
+</blockquote>
+<h2 id="执行函数调用类的内部变量"><a href="#执行函数调用类的内部变量" class="headerlink" title="执行函数调用类的内部变量"></a>执行函数调用类的内部变量</h2><p>该变量也必须被声明为 static 类型</p>
+<blockquote>
+<p>static double mClassStaticValue;</p>
+</blockquote>
+<blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment">//静态线程函数</span></span><br><span class="line">&gt; <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DateProcessThread</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line">&gt; &#123;</span><br><span class="line">&gt; 	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Data:"</span>&lt;&lt; i &lt;&lt; <span class="string">"  I am a thread !"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt; 	<span class="built_in">cout</span> &lt;&lt; <span class="string">"I can process static value:"</span> &lt;&lt; mClassStaticValue &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="同步问题"><a href="#同步问题" class="headerlink" title="同步问题"></a>同步问题</h2><p>thread 全部创建后,再依次 join。 可实现多个线程同步跑。</p>
+<p>事实上，thread在创建的时候就已经开始执行了，当主线程遇到join的时候会等待该线程执行完才继续往下走。</p>
+<p>所以，先循环创建 n 个thread, n 个 thread 同步执行，等待 n个thread执行完毕。</p>
+<p><strong>如果，写成如下的形式，则为顺序执行，失去创建多线程的意义：</strong></p>
+<blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment">//入口函数</span></span><br><span class="line">&gt; <span class="function"><span class="keyword">void</span> <span class="title">Render</span><span class="params">()</span></span></span><br><span class="line">&gt; &#123;</span><br><span class="line">&gt;     <span class="comment">//多个线程顺序执行，没有实现 采用多线程提高效率的初衷</span></span><br><span class="line">&gt; 	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">&gt; 	&#123;</span><br><span class="line">&gt; 		thread* thrd = <span class="keyword">new</span> thread(DateProcessThread, mArrays[i]);</span><br><span class="line">&gt; 		thrd-&gt;join();</span><br><span class="line">&gt; 	&#125;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="https://picsforblog-1256749273.cos.ap-shanghai.myqcloud.com/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="顺序执行结果"></p>
+<h2 id="其他参考blog"><a href="#其他参考blog" class="headerlink" title="其他参考blog"></a>其他参考blog</h2><ul>
+<li><strong>C++多线程类Thread（C++11）</strong>  <a href="https://blog.csdn.net/ouyangfushu/article/details/80199140" target="_blank" rel="noopener">https://blog.csdn.net/ouyangfushu/article/details/80199140</a> </li>
+<li><strong>C++多线程 join</strong> <a href="https://blog.csdn.net/listenalone/article/details/79639299" target="_blank" rel="noopener">https://blog.csdn.net/listenalone/article/details/79639299</a>  <a href="https://www.cnblogs.com/IGNB/p/10522252.html" target="_blank" rel="noopener">https://www.cnblogs.com/IGNB/p/10522252.html</a> </li>
+<li><strong>c++11 thread 类内使用方法和跨类使用方法</strong> <a href="https://blog.csdn.net/gychixxx/article/details/78875061" target="_blank" rel="noopener">https://blog.csdn.net/gychixxx/article/details/78875061</a> </li>
 </ul>
-<h2 id="自定义Git"><a href="#自定义Git" class="headerlink" title="自定义Git"></a>自定义Git</h2><h3 id="忽略特殊文件"><a href="#忽略特殊文件" class="headerlink" title="忽略特殊文件"></a><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013758404317281e54b6f5375640abbb11e67be4cd49e0000" target="_blank" rel="noopener">忽略特殊文件</a></h3><p><code>.gitignore</code>文件用于定于需要忽略的文件</p>
-<h3 id="命令别名"><a href="#命令别名" class="headerlink" title="命令别名"></a>命令别名</h3><p>可以将Git的各种命令配置为自己熟悉的别名</p>
-<h3 id="搭建Git服务器"><a href="#搭建Git服务器" class="headerlink" title="搭建Git服务器"></a>搭建Git服务器</h3><p>使用 linux系统！</p>
 
       
     </div>
@@ -555,7 +476,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Git/" rel="tag"># Git</a>
+            <a href="/tags/C/" rel="tag"># C++</a>
           
         </div>
       
@@ -568,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/21/pandas速查/" rel="next" title="pandas速查">
-                <i class="fa fa-chevron-left"></i> pandas速查
+              <a href="/2019/09/19/开题报告-项目申请-名称解析及句法模板/" rel="next" title="开题报告/项目申请 名称解析及句法模板">
+                <i class="fa fa-chevron-left"></i> 开题报告/项目申请 名称解析及句法模板
               </a>
             
           </div>
@@ -577,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/23/何为懒惰/" rel="prev" title="何为懒惰">
-                何为懒惰 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -731,7 +648,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加文件"><span class="nav-number">2.</span> <span class="nav-text">添加文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单查看"><span class="nav-number">3.</span> <span class="nav-text">简单查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本切换："><span class="nav-number">4.</span> <span class="nav-text">版本切换：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区和暂存区的概念"><span class="nav-number">5.</span> <span class="nav-text">工作区和暂存区的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git管理跟踪的是修改"><span class="nav-number">6.</span> <span class="nav-text">Git管理跟踪的是修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改回退方法"><span class="nav-number">7.</span> <span class="nav-text">修改回退方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件"><span class="nav-number">8.</span> <span class="nav-text">删除文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库"><span class="nav-number">9.</span> <span class="nav-text">远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地创建好–-gt-Github"><span class="nav-number">9.1.</span> <span class="nav-text">本地创建好–&gt;Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#克隆Github已有仓库"><span class="nav-number">9.2.</span> <span class="nav-text">克隆Github已有仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分支管理"><span class="nav-number">10.</span> <span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础功能"><span class="nav-number">10.1.</span> <span class="nav-text">基础功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决冲突"><span class="nav-number">10.2.</span> <span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支管理策略"><span class="nav-number">10.3.</span> <span class="nav-text">分支管理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug分支"><span class="nav-number">10.4.</span> <span class="nav-text">Bug分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature分支"><span class="nav-number">10.5.</span> <span class="nav-text">Feature分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多人协作"><span class="nav-number">10.6.</span> <span class="nav-text">多人协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebase"><span class="nav-number">10.7.</span> <span class="nav-text">Rebase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标签管理"><span class="nav-number">11.</span> <span class="nav-text">标签管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Git"><span class="nav-number">12.</span> <span class="nav-text">自定义Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略特殊文件"><span class="nav-number">12.1.</span> <span class="nav-text">忽略特殊文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令别名"><span class="nav-number">12.2.</span> <span class="nav-text">命令别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建Git服务器"><span class="nav-number">12.3.</span> <span class="nav-text">搭建Git服务器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-11-lt-thread-gt-多线程"><span class="nav-number">1.</span> <span class="nav-text">C++11 &lt;thread&gt; 多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#总体代码及思路"><span class="nav-number">1.1.</span> <span class="nav-text">总体代码及思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类内部使用多线程"><span class="nav-number">1.2.</span> <span class="nav-text">类内部使用多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行函数调用类的内部变量"><span class="nav-number">1.3.</span> <span class="nav-text">执行函数调用类的内部变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步问题"><span class="nav-number">1.4.</span> <span class="nav-text">同步问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他参考blog"><span class="nav-number">1.5.</span> <span class="nav-text">其他参考blog</span></a></li></ol></li></ol></div>
             
 
           </div>
