@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.4.2"><title>归档 | Henry&#39;s Blog</title><meta name="description" content="按年份浏览全部文章"><link rel="canonical" href="https://henryma.top/archives/"><link rel="alternate" type="application/rss+xml" title="Henry's Blog" href="/rss.xml"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:title" content="归档 | Henry's Blog"><meta property="og:description" content="按年份浏览全部文章"><meta property="og:url" content="https://henryma.top/archives/"><meta property="og:site_name" content="Henry's Blog"><meta name="twitter:card" content="summary"><script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.DK7fMoYu.css"></head><body><header class="site-header"><div class="wrap"><a class="brand" href="/">Henry&#39;s Blog</a><nav class="nav"><a href="/">首页</a><a href="/archives/" aria-current="page">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/about/">关于</a></nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换浅色/深色"><span id="theme-icon">◐</span></button></div></header><main class="wrap"><section class="hero" style="padding-bottom:0.5rem"><h1>归档</h1><p>共 13 篇，3 个年份。</p></section><section class="year-group"><h2>2026</h2><ul class="post-list"><li><time datetime="2026-10-30T05:30:00.000Z">2026-10-30</time><a class="title" href="/2026/10/30/shanghai-evening-daycare-industry-research/">上海小学生校外晚托班行业研究报告</a><span class="cats">行业研究</span></li><li><time datetime="2026-02-20T15:16:05.000Z">2026-02-20</time><a class="title" href="/2026/02/20/openclaw-auto-blog/">手把手教你使用 OpenClaw 自动更新个人博客</a><span class="cats">技术教程</span></li></ul></section><section class="year-group"><h2>2019</h2><ul class="post-list"><li><time datetime="2019-09-30T02:33:14.000Z">2019-09-30</time><a class="title" href="/2019/09/30/C++11-类内使用多线程，提高执行效率/">C++11 类内使用多线程，提高执行效率</a><span class="cats">编程之美</span></li><li><time datetime="2019-09-19T09:05:10.000Z">2019-09-19</time><a class="title" href="/2019/09/19/开题报告-项目申请-名称解析及句法模板/">开题报告/项目申请 名称解析及句法模板</a><span class="cats">写作</span></li><li><time datetime="2019-01-03T14:10:16.000Z">2019-01-03</time><a class="title" href="/2019/01/03/动态规划算法/">动态规划算法</a><span class="cats">编程之美</span></li></ul></section><section class="year-group"><h2>2018</h2><ul class="post-list"><li><time datetime="2018-10-23T01:03:20.000Z">2018-10-23</time><a class="title" href="/2018/10/23/何为懒惰/">何为懒惰</a><span class="cats">读书 / 静定而悦</span></li><li><time datetime="2018-09-22T03:07:17.000Z">2018-09-22</time><a class="title" href="/2018/09/22/Git学习笔记/">Git学习笔记</a><span class="cats">编程之美</span></li><li><time datetime="2018-08-21T12:36:50.000Z">2018-08-21</time><a class="title" href="/2018/08/21/pandas速查/">pandas速查</a><span class="cats">编程之美</span></li><li><time datetime="2018-08-19T02:25:12.000Z">2018-08-19</time><a class="title" href="/2018/08/19/VS2010-编译-pnd3d体素化引擎/">VS2010 编译 pnd3d体素化引擎</a><span class="cats">编程之美</span></li><li><time datetime="2018-08-14T09:23:50.000Z">2018-08-14</time><a class="title" href="/2018/08/14/使用boost-python导出C-数组的方法/">使用boost::python导出C++数组/STL容器的方法 | 及其他函数和类的方法</a><span class="cats">编程之美</span></li><li><time datetime="2018-08-09T13:21:18.000Z">2018-08-09</time><a class="title" href="/2018/08/09/静定而悦，练字！/">静定而悦，练字！</a><span class="cats">书法</span></li><li><time datetime="2018-08-07T01:21:35.000Z">2018-08-07</time><a class="title" href="/2018/08/07/Fantastic-features-of-Hexo-Next/">Fantastic features of Hexo&amp;Next</a><span class="cats">建站之路</span></li><li><time datetime="2018-08-06T10:43:52.000Z">2018-08-06</time><a class="title" href="/2018/08/06/建站过程/">Birth of this Blog</a><span class="cats">建站之路</span></li></ul></section></main><footer class="site-footer"><div class="wrap"><span>© 2026 Henry's Blog</span><span><a href="/rss.xml">RSS</a> ·<a href="/archives/">归档</a> ·<a href="https://github.com/HenryMa96" rel="me noopener">GitHub</a></span></div></footer><script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const paint = () => {
+          const dark = document.documentElement.dataset.theme === 'dark';
+          if (icon) icon.textContent = dark ? '☀' : '◐';
+        };
+        paint();
+        btn?.addEventListener('click', () => {
+          const next =
+            document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {
+            /* ignore */
+          }
+          paint();
+        });
+      })();
+    </script></body></html>

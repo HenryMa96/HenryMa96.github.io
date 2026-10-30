@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.4.2"><title>C++11 类内使用多线程，提高执行效率 | Henry&#39;s Blog</title><meta name="description" content="C++11 类内使用多线程，提高执行效率 — Henry's Blog"><link rel="canonical" href="https://henryma.top/2019/09/30/C++11-%E7%B1%BB%E5%86%85%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%8F%90%E9%AB%98%E6%89%A7%E8%A1%8C%E6%95%88%E7%8E%87/"><link rel="alternate" type="application/rss+xml" title="Henry's Blog" href="/rss.xml"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="article"><meta property="og:title" content="C++11 类内使用多线程，提高执行效率 | Henry's Blog"><meta property="og:description" content="C++11 类内使用多线程，提高执行效率 — Henry's Blog"><meta property="og:url" content="https://henryma.top/2019/09/30/C++11-%E7%B1%BB%E5%86%85%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%8F%90%E9%AB%98%E6%89%A7%E8%A1%8C%E6%95%88%E7%8E%87/"><meta property="og:site_name" content="Henry's Blog"><meta name="twitter:card" content="summary"><meta property="article:published_time" content="2019-09-30T02:33:14.000Z"><meta property="article:modified_time" content="2019-09-30T03:05:37.000Z"><script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.DK7fMoYu.css"></head><body><header class="site-header"><div class="wrap"><a class="brand" href="/">Henry&#39;s Blog</a><nav class="nav"><a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/about/">关于</a></nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换浅色/深色"><span id="theme-icon">◐</span></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>C++11 类内使用多线程，提高执行效率</h1><div class="article-meta"><time datetime="2019-09-30T02:33:14.000Z">2019-09-30</time><a href="/categories/%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BE%8E/">编程之美</a><span>约 2 分钟</span></div><div class="tag-row"><a class="tag" href="/tags/C%2B%2B/">#C++</a></div></header><nav class="article-toc" aria-label="文章目录"><details open><summary>文章目录</summary><ul><li><a href="#总体代码及思路">总体代码及思路</a></li><li><a href="#类内部使用多线程">类内部使用多线程</a></li><li><a href="#执行函数调用类的内部变量">执行函数调用类的内部变量</a></li><li><a href="#同步问题">同步问题</a></li><li><a href="#其他参考blog">其他参考blog</a></li></ul></details></nav><div class="prose"><h1 id="c11-thread-多线程">C++11 <code>&lt;thread&gt;</code> 多线程</h1>
+<p>本篇code解决：</p>
+<ul>
+<li>在类内部使用多线程，即多线程执行函数为类的成员函数</li>
+<li>执行函数调用类的内部变量</li>
+<li>同步问题</li>
+</ul>
+<h2 id="总体代码及思路">总体代码及思路</h2>
+<p>在 <strong>panel</strong> 类内，**Render()*<em>时，使用静态函数 <em><em>DateProcessThread(Data</em> anyInData)</em></em> 分批处理 <strong>mArrays</strong> 的数据，并在处理时，使用 <strong>panel</strong> 类的 静态成员变量 <strong>mClassStaticValue</strong>辅助， 等待多个线程处理完毕后，再继续执行。</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="c++"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">#include</span><span style="color:#032F62;--shiki-dark:#96D0FF"> &lt;iostream&gt;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">#include</span><span style="color:#032F62;--shiki-dark:#96D0FF"> &lt;thread&gt;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">#include</span><span style="color:#032F62;--shiki-dark:#96D0FF"> &lt;vector&gt;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">using</span><span style="color:#D73A49;--shiki-dark:#F47067"> namespace</span><span style="color:#6F42C1;--shiki-dark:#F69D50"> std</span><span style="color:#24292E;--shiki-dark:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">class</span><span style="color:#6F42C1;--shiki-dark:#F69D50"> panel</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">{</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">public:</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#DCBDFB">	panel</span><span style="color:#24292E;--shiki-dark:#ADBAC7">() {}</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#DCBDFB">	~panel</span><span style="color:#24292E;--shiki-dark:#ADBAC7">() { </span><span style="color:#D73A49;--shiki-dark:#F47067">delete</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> mArrays; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390">	//Data</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">	static</span><span style="color:#D73A49;--shiki-dark:#F47067"> double</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> mClassStaticValue;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">	int*</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> mArrays;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390">	//静态线程函数</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">	static</span><span style="color:#D73A49;--shiki-dark:#F47067"> void</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> DateProcessThread</span><span style="color:#24292E;--shiki-dark:#ADBAC7">(</span><span style="color:#D73A49;--shiki-dark:#F47067">int</span><span style="color:#E36209;--shiki-dark:#F69D50"> i</span><span style="color:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	{</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		cout </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "Data:"</span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "  I am a thread !"</span><span style="color:#D73A49;--shiki-dark:#F47067"> &lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> endl;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		cout </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "I can process static value:"</span><span style="color:#D73A49;--shiki-dark:#F47067"> &lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> mClassStaticValue </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> endl;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390">	//入口函数</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">	void</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> Render</span><span style="color:#24292E;--shiki-dark:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	{</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">		std</span><span style="color:#24292E;--shiki-dark:#ADBAC7">::</span><span style="color:#6F42C1;--shiki-dark:#F69D50">vector</span><span style="color:#24292E;--shiki-dark:#ADBAC7">&lt;</span><span style="color:#6F42C1;--shiki-dark:#F69D50">thread</span><span style="color:#D73A49;--shiki-dark:#F47067">*</span><span style="color:#24292E;--shiki-dark:#ADBAC7">&gt; thrdList;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">		for</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="color:#D73A49;--shiki-dark:#F47067">size_t</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="color:#24292E;--shiki-dark:#ADBAC7">; i </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 5</span><span style="color:#24292E;--shiki-dark:#ADBAC7">; i</span><span style="color:#D73A49;--shiki-dark:#F47067">++</span><span style="color:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		{</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">			thread</span><span style="color:#D73A49;--shiki-dark:#F47067">*</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> thrd </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#D73A49;--shiki-dark:#F47067"> new</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> thread</span><span style="color:#24292E;--shiki-dark:#ADBAC7">(DateProcessThread, mArrays[i]);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">			thrdList.</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB">push_back</span><span style="color:#24292E;--shiki-dark:#ADBAC7">(thrd);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		}</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">		for</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="color:#D73A49;--shiki-dark:#F47067">auto</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> thrd : thrdList)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		{</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">			thrd-&gt;</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB">join</span><span style="color:#24292E;--shiki-dark:#ADBAC7">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">double</span><span style="color:#6F42C1;--shiki-dark:#F69D50"> panel</span><span style="color:#24292E;--shiki-dark:#ADBAC7">::mClassStaticValue </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="color:#24292E;--shiki-dark:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">void</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> main</span><span style="color:#24292E;--shiki-dark:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">{</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">	panel</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> tPanel;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">	panel</span><span style="color:#24292E;--shiki-dark:#ADBAC7">::mClassStaticValue </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 50</span><span style="color:#24292E;--shiki-dark:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	tPanel.mArrays </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#D73A49;--shiki-dark:#F47067"> new</span><span style="color:#D73A49;--shiki-dark:#F47067"> int</span><span style="color:#24292E;--shiki-dark:#ADBAC7">[</span><span style="color:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="color:#24292E;--shiki-dark:#ADBAC7">];</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">	for</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="color:#D73A49;--shiki-dark:#F47067">size_t</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="color:#24292E;--shiki-dark:#ADBAC7">; i </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 5</span><span style="color:#24292E;--shiki-dark:#ADBAC7">; i</span><span style="color:#D73A49;--shiki-dark:#F47067">++</span><span style="color:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	{</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		tPanel.mArrays[i] </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="color:#D73A49;--shiki-dark:#F47067">+</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 10</span><span style="color:#24292E;--shiki-dark:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	tPanel.</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB">Render</span><span style="color:#24292E;--shiki-dark:#ADBAC7">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre>
+<p><img src="/images/2019-09-30-C++11-%E7%B1%BB%E5%86%85%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%8F%90%E9%AB%98%E6%89%A7%E8%A1%8C%E6%95%88%E7%8E%87/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="执行结果"></p>
+<h2 id="类内部使用多线程">类内部使用多线程</h2>
+<p>线程执行函数必须定义为 static ！</p>
+<blockquote>
+<p>static void DateProcessThread(int i);</p>
+</blockquote>
+<blockquote>
+<p>thread* thrd = new thread(DateProcessThread, mArrays[i]);</p>
+</blockquote>
+<h2 id="执行函数调用类的内部变量">执行函数调用类的内部变量</h2>
+<p>该变量也必须被声明为 static 类型</p>
+<blockquote>
+<p>static double mClassStaticValue;</p>
+</blockquote>
+<blockquote>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="c++"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#768390">//静态线程函数</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">static</span><span style="color:#D73A49;--shiki-dark:#F47067"> void</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> DateProcessThread</span><span style="color:#24292E;--shiki-dark:#ADBAC7">(</span><span style="color:#D73A49;--shiki-dark:#F47067">int</span><span style="color:#E36209;--shiki-dark:#F69D50"> i</span><span style="color:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">{</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	cout </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "Data:"</span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "  I am a thread !"</span><span style="color:#D73A49;--shiki-dark:#F47067"> &lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> endl;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	cout </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "I can process static value:"</span><span style="color:#D73A49;--shiki-dark:#F47067"> &lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> mClassStaticValue </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;&lt;</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> endl;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre>
+</blockquote>
+<h2 id="同步问题">同步问题</h2>
+<p>thread 全部创建后,再依次 join。 可实现多个线程同步跑。</p>
+<p>事实上，thread在创建的时候就已经开始执行了，当主线程遇到join的时候会等待该线程执行完才继续往下走。</p>
+<p>所以，先循环创建 n 个thread, n 个 thread 同步执行，等待 n个thread执行完毕。</p>
+<p><strong>如果，写成如下的形式，则为顺序执行，失去创建多线程的意义：</strong></p>
+<blockquote>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="c++"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#768390">//入口函数</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">void</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> Render</span><span style="color:#24292E;--shiki-dark:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">{</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390">    //多个线程顺序执行，没有实现 采用多线程提高效率的初衷</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F47067">	for</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="color:#D73A49;--shiki-dark:#F47067">size_t</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="color:#24292E;--shiki-dark:#ADBAC7">; i </span><span style="color:#D73A49;--shiki-dark:#F47067">&lt;</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> 5</span><span style="color:#24292E;--shiki-dark:#ADBAC7">; i</span><span style="color:#D73A49;--shiki-dark:#F47067">++</span><span style="color:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	{</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">		thread</span><span style="color:#D73A49;--shiki-dark:#F47067">*</span><span style="color:#24292E;--shiki-dark:#ADBAC7"> thrd </span><span style="color:#D73A49;--shiki-dark:#F47067">=</span><span style="color:#D73A49;--shiki-dark:#F47067"> new</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB"> thread</span><span style="color:#24292E;--shiki-dark:#ADBAC7">(DateProcessThread, mArrays[i]);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">		thrd-&gt;</span><span style="color:#6F42C1;--shiki-dark:#DCBDFB">join</span><span style="color:#24292E;--shiki-dark:#ADBAC7">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">	}</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre>
+</blockquote>
+<p><img src="/images/2019-09-30-C++11-%E7%B1%BB%E5%86%85%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%8F%90%E9%AB%98%E6%89%A7%E8%A1%8C%E6%95%88%E7%8E%87/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="顺序执行结果"></p>
+<h2 id="其他参考blog">其他参考blog</h2>
+<ul>
+<li><strong>C++多线程类Thread（C++11）</strong> <a href="https://blog.csdn.net/ouyangfushu/article/details/80199140">https://blog.csdn.net/ouyangfushu/article/details/80199140</a></li>
+<li><strong>C++多线程 join</strong> <a href="https://blog.csdn.net/listenalone/article/details/79639299">https://blog.csdn.net/listenalone/article/details/79639299</a> <a href="https://www.cnblogs.com/IGNB/p/10522252.html">https://www.cnblogs.com/IGNB/p/10522252.html</a></li>
+<li><strong>c++11 thread 类内使用方法和跨类使用方法</strong> <a href="https://blog.csdn.net/gychixxx/article/details/78875061">https://blog.csdn.net/gychixxx/article/details/78875061</a></li>
+</ul>
+</div><footer class="article-foot"><span>最后更新 2019-09-30</span><span><a href="/archives/">← 全部文章</a></span></footer><nav class="pager"><a href="/2026/02/20/openclaw-auto-blog/"><small>较新</small>手把手教你使用 OpenClaw 自动更新个人博客</a><a class="next" href="/2019/09/19/开题报告-项目申请-名称解析及句法模板/"><small>较早</small>开题报告/项目申请 名称解析及句法模板</a></nav></article><script type="module">var e=document.querySelector(`.article-toc details`),t=window.matchMedia(`(max-width: 1100px)`);e&&(e.open=!t.matches,t.addEventListener(`change`,t=>{e.open=!t.matches}),e.addEventListener(`click`,n=>{t.matches&&n.target instanceof Element&&n.target.closest(`a`)&&(e.open=!1)}));</script></main><footer class="site-footer"><div class="wrap"><span>© 2026 Henry's Blog</span><span><a href="/rss.xml">RSS</a> ·<a href="/archives/">归档</a> ·<a href="https://github.com/HenryMa96" rel="me noopener">GitHub</a></span></div></footer><script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const paint = () => {
+          const dark = document.documentElement.dataset.theme === 'dark';
+          if (icon) icon.textContent = dark ? '☀' : '◐';
+        };
+        paint();
+        btn?.addEventListener('click', () => {
+          const next =
+            document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {
+            /* ignore */
+          }
+          paint();
+        });
+      })();
+    </script></body></html>

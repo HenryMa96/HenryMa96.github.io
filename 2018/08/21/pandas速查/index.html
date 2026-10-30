@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.4.2"><title>pandas速查 | Henry&#39;s Blog</title><meta name="description" content="pandas速查 — Henry's Blog"><link rel="canonical" href="https://henryma.top/2018/08/21/pandas%E9%80%9F%E6%9F%A5/"><link rel="alternate" type="application/rss+xml" title="Henry's Blog" href="/rss.xml"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="article"><meta property="og:title" content="pandas速查 | Henry's Blog"><meta property="og:description" content="pandas速查 — Henry's Blog"><meta property="og:url" content="https://henryma.top/2018/08/21/pandas%E9%80%9F%E6%9F%A5/"><meta property="og:site_name" content="Henry's Blog"><meta name="twitter:card" content="summary"><meta property="article:published_time" content="2018-08-21T12:36:50.000Z"><meta property="article:modified_time" content="2018-08-31T13:55:23.000Z"><script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.DK7fMoYu.css"></head><body><header class="site-header"><div class="wrap"><a class="brand" href="/">Henry&#39;s Blog</a><nav class="nav"><a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/about/">关于</a></nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换浅色/深色"><span id="theme-icon">◐</span></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>pandas速查</h1><div class="article-meta"><time datetime="2018-08-21T12:36:50.000Z">2018-08-21</time><a href="/categories/%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BE%8E/">编程之美</a><span>约 5 分钟</span></div><div class="tag-row"><a class="tag" href="/tags/pandas/">#pandas</a><a class="tag" href="/tags/python/">#python</a></div></header><nav class="article-toc" aria-label="文章目录"><details open><summary>文章目录</summary><ul><li><a href="#一数据的导入">一、数据的导入</a></li><li><a href="#二数据的导出">二、数据的导出</a></li><li><a href="#三创建测试对象">三、创建测试对象</a></li><li><a href="#四数据的查看与检查">四、数据的查看与检查</a></li><li><a href="#五数据的选取">五、数据的选取</a></li><li><a href="#六数据的清洗">六、数据的清洗</a></li><li><a href="#七数据的过滤filter排序sort和分组groupby">七、数据的过滤(filter),排序(sort)和分组(groupby)</a></li><li><a href="#八数据的连接join与组合combine">八、数据的连接(join)与组合(combine)</a></li><li><a href="#九数据的统计">九、数据的统计</a></li></ul></details></nav><div class="prose"><p>Pandas 速查手册</p>
+<h2 id="一数据的导入">一、数据的导入</h2>
+<p>pd.read_csv(filename) # 导入csv格式文件中的数据<br>
+pd.read_table(filename) # 导入有分隔符的文本 (如TSV) 中的数据<br>
+pd.read_excel(filename) # 导入Excel格式文件中的数据<br>
+pd.read_sql(query, connection_object) # 导入SQL数据表/数据库中的数据<br>
+pd.read_json(json_string) # 导入JSON格式的字符，URL地址或者文件中的数据<br>
+pd.read_html(url) # 导入经过解析的URL地址中包含的数据框 (DataFrame) 数据<br>
+pd.read_clipboard() # 导入系统粘贴板里面的数据<br>
+pd.DataFrame(dict) # 导入Python字典 (dict) 里面的数据，其中key是数据框的表头，value是数据框的内容。</p>
+<h2 id="二数据的导出">二、数据的导出</h2>
+<p>df.to_csv(filename) # 将数据框 (DataFrame)中的数据导入csv格式的文件中<br>
+df.to_excel(filename) # 将数据框 (DataFrame)中的数据导入Excel格式的文件中<br>
+df.to_sql(table_name,connection_object) # 将数据框 (DataFrame)中的数据导入SQL数据表/数据库中<br>
+df.to_json(filename) # 将数据框 (DataFrame)中的数据导入JSON格式的文件中</p>
+<h2 id="三创建测试对象">三、创建测试对象</h2>
+<p><strong>创建一个DataFrame对象</strong><br>
+pd.DataFrame(np.random.rand(10,5)) # 创建一个5列10行的由随机浮点数组成的数据框 DataFrame</p>
+<p><strong>创建一个Series对象</strong><br>
+pd.Series(my_list) # 从一个可迭代的对象 my_list 中创建一个数据组</p>
+<h2 id="四数据的查看与检查">四、数据的查看与检查</h2>
+<p>df.head(n) # 查看数据框的前n行<br>
+df.tail(n) # 查看数据框的最后n行<br>
+df.shape # 查看数据框的行数与列数 shape是该对象的一个属性值，不是函数<br>
+df.info() # 查看数据框 (DataFrame) 的索引、数据类型及内存信息<br>
+df.describe() # 对于数据类型为数值型的列，查询其描述性统计的内容<br>
+<strong>s.value_counts(dropna=False)</strong> # s是一个Series对象，查询每个独特数据值出现次数统计<br>
+<strong>df.apply(pd.Series.value_counts)</strong> # 统计df中每一个数字在每一列中出现的次数</p>
+<h2 id="五数据的选取">五、数据的选取</h2>
+<p>df[col] # 以数组 Series 的形式返回选取的列，col是列名<br>
+df[[col1, col2]] # 以新的数据框(DataFrame)的形式返回选取的列<br>
+df.loc[0] # 选取第一行,没有设置index时，第一行index默认为0<br>
+df.ix[‘a’] # 选取索引为a的那一行<br>
+df.iloc[0,:] # 选取第一行<br>
+df.iloc[0,0] # 选取第一行第一个元素</p>
+<p>s.iloc[0] # 按照位置选取<br>
+s.loc[‘index_one’] # 按照索引选取 ‘index_one’是指第一个位置的index名，没有设置index时，inde默认为0</p>
+<h2 id="六数据的清洗">六、数据的清洗</h2>
+<p>df.columns = [‘a’,’b’] # 重命名数据框的列名称<br>
+pd.isnull() # 检查数据中空值出现的情况，并返回一个由布尔值(True,Fale)组成的列<br>
+pd.notnull() # 检查数据中非空值出现的情况，并返回一个由布尔值(True,False)组成的列<br>
+df.dropna() # 移除数据框 DataFrame 中包含空值的行<br>
+df.dropna(axis=1) # 移除数据框 DataFrame 中包含空值的列<br>
+df.fillna(x) # 将数据框 DataFrame 中的所有空值替换为 x</p>
+<p>s.fillna(s.mean()) -&gt; 将所有空值替换为平均值<br>
+s.astype(float) # 将数组(Series)的格式转化为浮点数<br>
+s.replace(1,’one’) # 将数组(Series)中的所有1替换为’one’<br>
+s.replace([1,3],[‘one’,’three’]) # 将数组(Series)中所有的1替换为’one’, 所有的3替换为’three’</p>
+<p>df.rename(columns=lambda x: x + 2) # 将全体列重命名<br>
+df.rename(columns={‘old_name’: ‘new_ name’}) # 将选择的列重命名<br>
+df.rename(index = lambda x: x+ 1) # 改变全体索引<br>
+df.set_index(‘column_one’) # 改变索引 ，指定某一列的值当整个DataFrame的索引</p>
+<h2 id="七数据的过滤filter排序sort和分组groupby">七、数据的过滤(filter),排序(sort)和分组(groupby)</h2>
+<p><strong>filter</strong><br>
+df[df[col] &gt; 0.5] # 以col列为标准，选取数值大于0.5的行为True，然后从df中选取这些行<br>
+df[(df[col] &gt; 0.5) &amp; (df[col] &lt; 0.7)] # 选取数据框df中对应行（col列&gt;0.5,col&lt;0.7) <code>或为 |</code></p>
+<p><strong>sort</strong><br>
+df.sort_values(col1) # 按照数据框的列col1升序(ascending)的方式对数据框df做排序<br>
+df.sort_values(col2,ascending=False) # 按照数据框的列col2降序(descending)的方式对数据框df做排序<br>
+df.sort_values([col1,col2],ascending=[True,False]) # 按照数据框的列col1升序，col2降序的方式对数据框df做排序<br>
+<strong>groupby</strong><br>
+df.groupby(col) # 按照某列对数据框df做分组<br>
+df.groupby(‘A’).count() #根据A列分组，并计数<br>
+df.groupby([col1,col2]) # 按照列col1和col2对数据框df做分组<br>
+df.pivot_table(index=col1,values=[col2,col3],aggfunc=mean) # 做透视表，索引为col1,针对的数值列为col2和col3，aggfunc为分组函数，默认为mean,可以设置np.sum等</p>
+<p><strong>apply</strong><br>
+df.apply(np.mean) # 对数据框df的每一列求平均值<br>
+df.apply(np.max,axis=1) # 对数据框df的每一行求最大值 #axis=0是指沿着行轴方向，即从上到下的列方向，axis=1是指沿着列轴方向，即从左到右的方向</p>
+<h2 id="八数据的连接join与组合combine">八、数据的连接(join)与组合(combine)</h2>
+<p>df1.append(df2) # 在数据框df2的末尾添加数据框df1，其中df1和df2的列数应该相等<br>
+pd.concat([df1,df2]) # 不指定axis时默认为0，沿着行轴方向增加，列数应该相同与append一样<br>
+pd.concat([df1, df2],axis=1) # 在数据框df1的列最后添加数据框df2,其中df1和df2的行数应该相等</p>
+<p>df1.join(df2,on=col1,how=’inner’) # 对数据框df1和df2做内连接，其中连接的列为col1<br>
+pd.merge(df1,df2,left_on=’key’,right_on=’key’) #索引上的合并</p>
+<h2 id="九数据的统计">九、数据的统计</h2>
+<p>df.describe() # 得到数据框df每一列的描述性统计<br>
+df.mean() # 得到数据框df中每一列的平均值<br>
+df.corr() # 得到数据框df中每一列与其他列的相关系数<br>
+df.count() # 得到数据框df中每一列的非空值个数<br>
+df.max() # 得到数据框df中每一列的最大值<br>
+df.min() # 得到数据框df中每一列的最小值<br>
+df.median() # 得到数据框df中每一列的中位数<br>
+df.std() # 得到数据框df中每一列的标准差</p>
+</div><footer class="article-foot"><span>最后更新 2018-08-31</span><span><a href="/archives/">← 全部文章</a></span></footer><nav class="pager"><a href="/2018/09/22/Git学习笔记/"><small>较新</small>Git学习笔记</a><a class="next" href="/2018/08/19/VS2010-编译-pnd3d体素化引擎/"><small>较早</small>VS2010 编译 pnd3d体素化引擎</a></nav></article><script type="module">var e=document.querySelector(`.article-toc details`),t=window.matchMedia(`(max-width: 1100px)`);e&&(e.open=!t.matches,t.addEventListener(`change`,t=>{e.open=!t.matches}),e.addEventListener(`click`,n=>{t.matches&&n.target instanceof Element&&n.target.closest(`a`)&&(e.open=!1)}));</script></main><footer class="site-footer"><div class="wrap"><span>© 2026 Henry's Blog</span><span><a href="/rss.xml">RSS</a> ·<a href="/archives/">归档</a> ·<a href="https://github.com/HenryMa96" rel="me noopener">GitHub</a></span></div></footer><script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const paint = () => {
+          const dark = document.documentElement.dataset.theme === 'dark';
+          if (icon) icon.textContent = dark ? '☀' : '◐';
+        };
+        paint();
+        btn?.addEventListener('click', () => {
+          const next =
+            document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {
+            /* ignore */
+          }
+          paint();
+        });
+      })();
+    </script></body></html>

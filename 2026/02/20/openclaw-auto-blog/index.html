@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.4.2"><title>手把手教你使用 OpenClaw 自动更新个人博客 | Henry&#39;s Blog</title><meta name="description" content="手把手教你使用 OpenClaw 自动更新个人博客 — Henry's Blog"><link rel="canonical" href="https://henryma.top/2026/02/20/openclaw-auto-blog/"><link rel="alternate" type="application/rss+xml" title="Henry's Blog" href="/rss.xml"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="article"><meta property="og:title" content="手把手教你使用 OpenClaw 自动更新个人博客 | Henry's Blog"><meta property="og:description" content="手把手教你使用 OpenClaw 自动更新个人博客 — Henry's Blog"><meta property="og:url" content="https://henryma.top/2026/02/20/openclaw-auto-blog/"><meta property="og:site_name" content="Henry's Blog"><meta name="twitter:card" content="summary"><meta property="article:published_time" content="2026-02-20T15:16:05.000Z"><meta property="article:modified_time" content="2026-02-20T15:31:32.000Z"><script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.DK7fMoYu.css"></head><body><header class="site-header"><div class="wrap"><a class="brand" href="/">Henry&#39;s Blog</a><nav class="nav"><a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/about/">关于</a></nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换浅色/深色"><span id="theme-icon">◐</span></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>手把手教你使用 OpenClaw 自动更新个人博客</h1><div class="article-meta"><time datetime="2026-02-20T15:16:05.000Z">2026-02-20</time><a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a><span>约 3 分钟</span></div><div class="tag-row"><a class="tag" href="/tags/Hexo/">#Hexo</a><a class="tag" href="/tags/OpenClaw/">#OpenClaw</a><a class="tag" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a><a class="tag" href="/tags/AI%E5%8A%A9%E6%89%8B/">#AI助手</a></div></header><nav class="article-toc" aria-label="文章目录"><details open><summary>文章目录</summary><ul><li><a href="#前言">前言</a></li><li><a href="#背景一个被遗忘的博客">背景：一个被遗忘的博客</a></li><li><a href="#第一步配置-openclaw">第一步：配置 OpenClaw</a></li><li class="toc-subheading"><a href="#1-生成-ssh-key">1. 生成 SSH Key</a></li><li class="toc-subheading"><a href="#2-配置-git-使用新-key">2. 配置 Git 使用新 Key</a></li><li><a href="#第二步克隆现有仓库">第二步：克隆现有仓库</a></li><li><a href="#第三步重建-hexo-环境">第三步：重建 Hexo 环境</a></li><li class="toc-subheading"><a href="#1-安装-hexo-cli">1. 安装 Hexo CLI</a></li><li class="toc-subheading"><a href="#2-初始化新博客">2. 初始化新博客</a></li><li class="toc-subheading"><a href="#3-安装必要插件">3. 安装必要插件</a></li><li><a href="#第四步配置博客">第四步：配置博客</a></li><li class="toc-subheading"><a href="#站点配置-_configyml">站点配置 (_config.yml)</a></li><li class="toc-subheading"><a href="#主题配置-_confignextyml">主题配置 (_config.next.yml)</a></li><li><a href="#第五步写作和发布">第五步：写作和发布</a></li><li class="toc-subheading"><a href="#创建新文章">创建新文章</a></li><li class="toc-subheading"><a href="#本地预览">本地预览</a></li><li class="toc-subheading"><a href="#部署到-github-pages">部署到 GitHub Pages</a></li><li><a href="#openclaw-的优势">OpenClaw 的优势</a></li><li><a href="#常用命令速查">常用命令速查</a></li><li><a href="#总结">总结</a></li></ul></details></nav><div class="prose"><h2 id="前言">前言</h2>
+<p>作为一个多年没更新的博客主，我最近发现了一个神器：<strong>OpenClaw</strong>。它是一个 AI 个人助理，可以帮你做各种事情，包括——重新搭建和管理你的 Hexo 博客！</p>
+<p>这篇文章记录了我如何让 AI 助手”大虾”帮我从零开始恢复博客环境的全过程。</p>
+<h2 id="背景一个被遗忘的博客">背景：一个被遗忘的博客</h2>
+<p>几年前用 Hexo + GitHub Pages 搭建了个人博客，写了几篇文章后就荒废了。最近想重新开始写作，却发现：</p>
+<ul>
+<li>❌ 源文件不知道丢哪了</li>
+<li>❌ Hexo 环境早就没了</li>
+<li>❌ 完全忘记怎么操作了</li>
+</ul>
+<p>传统做法是翻文档、重新配置、踩各种坑。但现在有了 OpenClaw，一切变得简单了。</p>
+<h2 id="第一步配置-openclaw">第一步：配置 OpenClaw</h2>
+<h3 id="1-生成-ssh-key">1. 生成 SSH Key</h3>
+<p>首先需要让 AI 助手能访问 GitHub 仓库：</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">ssh-keygen</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> -t</span><span style="color:#032F62;--shiki-dark:#96D0FF"> ed25519</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> -C</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "openclaw-agent"</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> -f</span><span style="color:#032F62;--shiki-dark:#96D0FF"> ~/.ssh/id_ed25519_openclaw</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> -N</span><span style="color:#032F62;--shiki-dark:#96D0FF"> ""</span></span></code></pre>
+<p>生成后，把公钥添加到 GitHub：</p>
+<ul>
+<li>访问 <a href="https://github.com/settings/keys">https://github.com/settings/keys</a></li>
+<li>添加新的 SSH key</li>
+</ul>
+<h3 id="2-配置-git-使用新-key">2. 配置 Git 使用新 Key</h3>
+<p>编辑 <code>~/.ssh/config</code>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Host github.com</span></span>
+<span class="line"><span>    HostName github.com</span></span>
+<span class="line"><span>    User git</span></span>
+<span class="line"><span>    IdentityFile ~/.ssh/id_ed25519_openclaw</span></span>
+<span class="line"><span>    IdentitiesOnly yes</span></span></code></pre>
+<h2 id="第二步克隆现有仓库">第二步：克隆现有仓库</h2>
+<p>虽然源文件丢了，但部署仓库还在。先克隆下来分析：</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#005CC5;--shiki-dark:#6CB6FF">cd</span><span style="color:#032F62;--shiki-dark:#96D0FF"> ~/.openclaw/workspace</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">git</span><span style="color:#032F62;--shiki-dark:#96D0FF"> clone</span><span style="color:#032F62;--shiki-dark:#96D0FF"> git@github.com:YourUsername/YourUsername.github.io.git</span></span></code></pre>
+<p>通过分析 HTML 文件，AI 助手发现：</p>
+<ul>
+<li>使用的是 Hexo + NexT 主题</li>
+<li>风格是 Gemini scheme</li>
+<li>语言是中文</li>
+</ul>
+<h2 id="第三步重建-hexo-环境">第三步：重建 Hexo 环境</h2>
+<h3 id="1-安装-hexo-cli">1. 安装 Hexo CLI</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">npm</span><span style="color:#032F62;--shiki-dark:#96D0FF"> install</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> -g</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-cli</span></span></code></pre>
+<h3 id="2-初始化新博客">2. 初始化新博客</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> init</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-blog</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#6CB6FF">cd</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-blog</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">npm</span><span style="color:#032F62;--shiki-dark:#96D0FF"> install</span></span></code></pre>
+<h3 id="3-安装必要插件">3. 安装必要插件</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 部署插件</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">npm</span><span style="color:#032F62;--shiki-dark:#96D0FF"> install</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-deployer-git</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> --save</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># NexT 主题</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">npm</span><span style="color:#032F62;--shiki-dark:#96D0FF"> install</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-theme-next</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 搜索和统计插件</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">npm</span><span style="color:#032F62;--shiki-dark:#96D0FF"> install</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-generator-searchdb</span><span style="color:#032F62;--shiki-dark:#96D0FF"> hexo-symbols-count-time</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> --save</span></span></code></pre>
+<h2 id="第四步配置博客">第四步：配置博客</h2>
+<h3 id="站点配置-_configyml">站点配置 (_config.yml)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 站点信息</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">title</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">Henry's Blog</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">author</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">Henry Ma</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">language</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">zh-Hans</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">timezone</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">Asia/Shanghai</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># URL</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">url</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">https://henryma.top</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 部署配置</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">deploy</span><span style="color:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">  type</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">git</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">  repo</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">git@github.com:YourUsername/YourUsername.github.io.git</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">  branch</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">master</span></span></code></pre>
+<h3 id="主题配置-_confignextyml">主题配置 (_config.next.yml)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 使用 Gemini 风格（和之前保持一致）</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#8DDB8C">scheme</span><span style="color:#24292E;--shiki-dark:#ADBAC7">: </span><span style="color:#032F62;--shiki-dark:#96D0FF">Gemini</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 其他配置...</span></span></code></pre>
+<h2 id="第五步写作和发布">第五步：写作和发布</h2>
+<h3 id="创建新文章">创建新文章</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> new</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "文章标题"</span></span></code></pre>
+<p>这会在 <code>source/_posts/</code> 目录下生成 Markdown 文件。</p>
+<h3 id="本地预览">本地预览</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> clean</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> generate</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> server</span></span></code></pre>
+<p>访问 <a href="http://localhost:4000/">http://localhost:4000</a> 查看效果。</p>
+<h3 id="部署到-github-pages">部署到 GitHub Pages</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> deploy</span></span></code></pre>
+<p>一键推送到 GitHub，几分钟后就能在你的域名看到更新了！</p>
+<h2 id="openclaw-的优势">OpenClaw 的优势</h2>
+<p>整个过程中，我只需要：</p>
+<ol>
+<li>告诉 AI 助手我的需求</li>
+<li>提供必要的信息（GitHub 仓库地址等）</li>
+<li>确认关键操作</li>
+</ol>
+<p>AI 助手自动完成了：</p>
+<ul>
+<li>✅ 分析现有博客结构</li>
+<li>✅ 安装和配置所有依赖</li>
+<li>✅ 还原之前的主题风格</li>
+<li>✅ 生成测试文章验证环境</li>
+</ul>
+<p><strong>节省时间：</strong> 从完全不记得怎么操作，到环境搭建完成，只用了不到 20 分钟。</p>
+<p><strong>降低门槛：</strong> 不需要记住复杂的命令和配置，AI 助手会帮你处理细节。</p>
+<p><strong>可追溯：</strong> 所有操作都有记录，出问题也能快速定位。</p>
+<h2 id="常用命令速查">常用命令速查</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 创建新文章</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> new</span><span style="color:#032F62;--shiki-dark:#96D0FF"> "文章标题"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 清理缓存</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> clean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 生成静态文件</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> generate</span><span style="color:#6A737D;--shiki-dark:#768390">  # 或 hexo g</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 本地预览</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> server</span><span style="color:#6A737D;--shiki-dark:#768390">    # 或 hexo s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 部署</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> deploy</span><span style="color:#6A737D;--shiki-dark:#768390">    # 或 hexo d</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#768390"># 一键生成并部署</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#F69D50">hexo</span><span style="color:#032F62;--shiki-dark:#96D0FF"> g</span><span style="color:#005CC5;--shiki-dark:#6CB6FF"> -d</span></span></code></pre>
+<h2 id="总结">总结</h2>
+<p>有了 OpenClaw 这样的 AI 助手，技术门槛大大降低了。即使是多年没碰的项目，也能快速恢复。</p>
+<p>更重要的是，AI 助手不只是执行命令，它会：</p>
+<ul>
+<li>理解你的需求</li>
+<li>分析现有环境</li>
+<li>提供最佳实践</li>
+<li>记录操作过程</li>
+</ul>
+<p>这让我们可以把精力放在真正重要的事情上——<strong>创作内容</strong>，而不是折腾工具。</p>
+<p>如果你也有类似的需求，不妨试试 OpenClaw。它可能会成为你最得力的技术助手 🐿️</p>
+<hr>
+<p><strong>相关链接：</strong></p>
+<ul>
+<li>OpenClaw 官网：<a href="https://openclaw.ai/">https://openclaw.ai</a></li>
+<li>Hexo 文档：<a href="https://hexo.io/">https://hexo.io</a></li>
+<li>NexT 主题：<a href="https://theme-next.js.org/">https://theme-next.js.org</a></li>
+</ul>
+</div><footer class="article-foot"><span>最后更新 2026-02-20</span><span><a href="/archives/">← 全部文章</a></span></footer><nav class="pager"><a href="/2026/10/30/shanghai-evening-daycare-industry-research/"><small>较新</small>上海小学生校外晚托班行业研究报告</a><a class="next" href="/2019/09/30/C++11-类内使用多线程，提高执行效率/"><small>较早</small>C++11 类内使用多线程，提高执行效率</a></nav></article><script type="module">var e=document.querySelector(`.article-toc details`),t=window.matchMedia(`(max-width: 1100px)`);e&&(e.open=!t.matches,t.addEventListener(`change`,t=>{e.open=!t.matches}),e.addEventListener(`click`,n=>{t.matches&&n.target instanceof Element&&n.target.closest(`a`)&&(e.open=!1)}));</script></main><footer class="site-footer"><div class="wrap"><span>© 2026 Henry's Blog</span><span><a href="/rss.xml">RSS</a> ·<a href="/archives/">归档</a> ·<a href="https://github.com/HenryMa96" rel="me noopener">GitHub</a></span></div></footer><script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const paint = () => {
+          const dark = document.documentElement.dataset.theme === 'dark';
+          if (icon) icon.textContent = dark ? '☀' : '◐';
+        };
+        paint();
+        btn?.addEventListener('click', () => {
+          const next =
+            document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {
+            /* ignore */
+          }
+          paint();
+        });
+      })();
+    </script></body></html>

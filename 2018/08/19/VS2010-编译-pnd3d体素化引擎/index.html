@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.4.2"><title>VS2010 编译 pnd3d体素化引擎 | Henry&#39;s Blog</title><meta name="description" content="VS2010 编译 pnd3d体素化引擎 — Henry's Blog"><link rel="canonical" href="https://henryma.top/2018/08/19/VS2010-%E7%BC%96%E8%AF%91-pnd3d%E4%BD%93%E7%B4%A0%E5%8C%96%E5%BC%95%E6%93%8E/"><link rel="alternate" type="application/rss+xml" title="Henry's Blog" href="/rss.xml"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="article"><meta property="og:title" content="VS2010 编译 pnd3d体素化引擎 | Henry's Blog"><meta property="og:description" content="VS2010 编译 pnd3d体素化引擎 — Henry's Blog"><meta property="og:url" content="https://henryma.top/2018/08/19/VS2010-%E7%BC%96%E8%AF%91-pnd3d%E4%BD%93%E7%B4%A0%E5%8C%96%E5%BC%95%E6%93%8E/"><meta property="og:site_name" content="Henry's Blog"><meta name="twitter:card" content="summary"><meta property="article:published_time" content="2018-08-19T02:25:12.000Z"><meta property="article:modified_time" content="2018-08-21T04:57:25.000Z"><script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.DK7fMoYu.css"></head><body><header class="site-header"><div class="wrap"><a class="brand" href="/">Henry&#39;s Blog</a><nav class="nav"><a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/about/">关于</a></nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换浅色/深色"><span id="theme-icon">◐</span></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>VS2010 编译 pnd3d体素化引擎</h1><div class="article-meta"><time datetime="2018-08-19T02:25:12.000Z">2018-08-19</time><a href="/categories/%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BE%8E/">编程之美</a><span>约 1 分钟</span></div><div class="tag-row"><a class="tag" href="/tags/C%2B%2B/">#C++</a><a class="tag" href="/tags/voxel/">#voxel</a></div></header><nav class="article-toc" aria-label="文章目录"><details open><summary>文章目录</summary><ul><li class="toc-subheading"><a href="#世界坐标系方向">世界坐标系方向</a></li><li class="toc-subheading"><a href="#体素坐标系方向">体素坐标系方向</a></li></ul></details></nav><div class="prose"><p>PND3D uses a standard 8-way octree. Each non-leaf node is a 64-bit ( 8 Byte ) structure containing:</p>
+<ul>
+<li>char( 1 Byte ) chi: child byte mask: 1=has children - must recurse, 0=pure air or pure solid - don’t recurse), and a solid byte</li>
+<li>char sol (1 Byte ): solid byte mask: 1=pure solid inside, 0=not pure solid inside</li>
+<li>char mrk (1 Byte), mrk2 ( 1 Byte ): dummy bytes for structure alignment</li>
+<li>int ind (4 Byte ): an index pointer to the first child node. There can be anywhere from 0 to 8 children depending on the child mask.</li>
+</ul>
+<p>需要学习的功能：</p>
+<ul>
+<li>H键将相关联的物体删除</li>
+<li>(Shift) Alt C: add/remove random drawcone</li>
+<li>Physics: ———————————————————————<br>
+Ctrl C: toggle collision<br>
+Ctrl H: toggle hover checking (removes hovers at activation)<br>
+Ctrl G: toggle gravity<br>
+Alt H: generate sprite at cursor if hovering //可以将物体减去，同时又重力和碰撞的效果！！！<br>
+Alt S: swap solid&amp;air (affects future physics ops)</li>
+</ul>
+<blockquote>
+<p>ctrl: 0x0c0000</p>
+<p>shift: 0x030000</p>
+<p>alt: 0x300000</p>
+</blockquote>
+<hr>
+<h3 id="世界坐标系方向">世界坐标系方向</h3>
+<p>​ 屏幕从上往下为+Y</p>
+<p>​ 屏幕从左往右为+X</p>
+<p>​ 屏幕垂直朝里为+Z</p>
+<h3 id="体素坐标系方向">体素坐标系方向</h3>
+<p>​ 屏幕从上往下为+Y</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="background-color:#fff;--shiki-dark-bg:#22272e;color:#24292e;--shiki-dark:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="c++"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#DCBDFB">oct_mod</span><span style="color:#24292E;--shiki-dark:#ADBAC7">(spr[curspr].oct,(</span><span style="color:#005CC5;--shiki-dark:#6CB6FF">brush_t</span><span style="color:#D73A49;--shiki-dark:#F47067"> *</span><span style="color:#24292E;--shiki-dark:#ADBAC7">)</span><span style="color:#D73A49;--shiki-dark:#F47067">&amp;</span><span style="color:#24292E;--shiki-dark:#ADBAC7">box,</span><span style="color:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="color:#24292E;--shiki-dark:#ADBAC7">);</span><span style="color:#6A737D;--shiki-dark:#768390">  //3 add 2 remove</span></span></code></pre>
+</div><footer class="article-foot"><span>最后更新 2018-08-21</span><span><a href="/archives/">← 全部文章</a></span></footer><nav class="pager"><a href="/2018/08/21/pandas速查/"><small>较新</small>pandas速查</a><a class="next" href="/2018/08/14/使用boost-python导出C-数组的方法/"><small>较早</small>使用boost::python导出C++数组/STL容器的方法 | 及其他函数和类的方法</a></nav></article><script type="module">var e=document.querySelector(`.article-toc details`),t=window.matchMedia(`(max-width: 1100px)`);e&&(e.open=!t.matches,t.addEventListener(`change`,t=>{e.open=!t.matches}),e.addEventListener(`click`,n=>{t.matches&&n.target instanceof Element&&n.target.closest(`a`)&&(e.open=!1)}));</script></main><footer class="site-footer"><div class="wrap"><span>© 2026 Henry's Blog</span><span><a href="/rss.xml">RSS</a> ·<a href="/archives/">归档</a> ·<a href="https://github.com/HenryMa96" rel="me noopener">GitHub</a></span></div></footer><script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        const paint = () => {
+          const dark = document.documentElement.dataset.theme === 'dark';
+          if (icon) icon.textContent = dark ? '☀' : '◐';
+        };
+        paint();
+        btn?.addEventListener('click', () => {
+          const next =
+            document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {
+            /* ignore */
+          }
+          paint();
+        });
+      })();
+    </script></body></html>
